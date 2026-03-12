@@ -1,0 +1,703 @@
+2025-10-01 14:45:44 | INFO     | utils.logger:wrapper:71 - Starting Main Qdrant Project Execution
+2025-10-01 14:45:44 | INFO     | __main__:main:17 - Starting Qdrant Vector Database Project
+2025-10-01 14:45:44 | INFO     | __main__:main:21 - Loading and preprocessing dataset...
+2025-10-01 14:45:44 | INFO     | data.dataset_loader:__init__:28 - DatasetLoader initialized for SetFit/bbc-news with split train
+2025-10-01 14:45:44 | INFO     | data.dataset_loader:load_dataset:37 - Loading BBC News dataset: SetFit/bbc-news (split: train)
+2025-10-01 14:46:05 | INFO     | data.dataset_loader:load_dataset:44 - BBC News dataset size: 1225 records
+2025-10-01 14:46:05 | INFO     | data.dataset_loader:load_dataset:45 - Columns: ['text', 'label', 'label_text']
+2025-10-01 14:46:05 | INFO     | data.preprocessor:__init__:24 - TextPreprocessor initialized with 18 stopwords
+2025-10-01 14:46:05 | INFO     | data.preprocessor:preprocess_dataframe_column:67 - Preprocessing DataFrame column 'text' with 1225 rows
+2025-10-01 14:46:05 | INFO     | data.preprocessor:preprocess_dataframe_column:71 - Successfully preprocessed column 'text'
+2025-10-01 14:46:05 | INFO     | data.dataset_loader:save_to_parquet:63 - Dataset saved to parquet: ./bbc_news.parquet
+2025-10-01 14:46:05 | INFO     | __main__:main:31 - Dataset preprocessed and saved (1225 records)
+2025-10-01 14:46:05 | INFO     | __main__:main:37 - Initializing embedding model...
+2025-10-01 14:46:05 | INFO     | models.embedding_model:__init__:80 - Initializing embedding model: sentence-transformers/all-MiniLM-L6-v2
+2025-10-01 14:46:19 | ERROR    | models.embedding_model:__init__:97 - Failed to initialize model sentence-transformers/all-MiniLM-L6-v2: (MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json (Caused by SSLError(SSLError(1, '[SSL: WRONG_VERSION_NUMBER] wrong version number (_ssl.c:1028)')))"), '(Request ID: af779bb5-a919-4ca9-870c-63ede0a569c8)')
+2025-10-01 14:46:19 | ERROR    | __main__:main:100 - Critical error in main execution: (MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json (Caused by SSLError(SSLError(1, '[SSL: WRONG_VERSION_NUMBER] wrong version number (_ssl.c:1028)')))"), '(Request ID: af779bb5-a919-4ca9-870c-63ede0a569c8)')
+Traceback (most recent call last):
+
+  File "c:\Users\hp\AppData\Local\Programs\Python\Python313\Lib\site-packages\urllib3\connectionpool.py", line 464, in _make_request
+    self._validate_conn(conn)
+    │    │              └ <urllib3.connection.HTTPSConnection object at 0x000001A7BB522210>
+    │    └ <function HTTPSConnectionPool._validate_conn at 0x000001A7FD37C680>
+    └ <urllib3.connectionpool.HTTPSConnectionPool object at 0x000001A7BB451160>
+  File "c:\Users\hp\AppData\Local\Programs\Python\Python313\Lib\site-packages\urllib3\connectionpool.py", line 1093, in _validate_conn
+    conn.connect()
+    │    └ <function HTTPSConnection.connect at 0x000001A7FD398220>
+    └ <urllib3.connection.HTTPSConnection object at 0x000001A7BB522210>
+  File "c:\Users\hp\AppData\Local\Programs\Python\Python313\Lib\site-packages\urllib3\connection.py", line 790, in connect
+    sock_and_verified = _ssl_wrap_socket_and_match_hostname(
+                        └ <function _ssl_wrap_socket_and_match_hostname at 0x000001A7FD372840>
+  File "c:\Users\hp\AppData\Local\Programs\Python\Python313\Lib\site-packages\urllib3\connection.py", line 969, in _ssl_wrap_socket_and_match_hostname
+    ssl_sock = ssl_wrap_socket(
+               └ <function ssl_wrap_socket at 0x000001A7FD36A160>
+  File "c:\Users\hp\AppData\Local\Programs\Python\Python313\Lib\site-packages\urllib3\util\ssl_.py", line 480, in ssl_wrap_socket
+    ssl_sock = _ssl_wrap_socket_impl(sock, context, tls_in_tls, server_hostname)
+               │                     │     │        │           └ 'huggingface.co'
+               │                     │     │        └ False
+               │                     │     └ <ssl.SSLContext object at 0x000001A7FD4DE3C0>
+               │                     └ <socket.socket [closed] fd=-1, family=2, type=1, proto=0>
+               └ <function _ssl_wrap_socket_impl at 0x000001A7FD36A340>
+  File "c:\Users\hp\AppData\Local\Programs\Python\Python313\Lib\site-packages\urllib3\util\ssl_.py", line 524, in _ssl_wrap_socket_impl
+    return ssl_context.wrap_socket(sock, server_hostname=server_hostname)
+           │           │           │                     └ 'huggingface.co'
+           │           │           └ <socket.socket [closed] fd=-1, family=2, type=1, proto=0>
+           │           └ <function SSLContext.wrap_socket at 0x000001A7D1B0A0C0>
+           └ <ssl.SSLContext object at 0x000001A7FD4DE3C0>
+  File "c:\Users\hp\AppData\Local\Programs\Python\Python313\Lib\ssl.py", line 455, in wrap_socket
+    return self.sslsocket_class._create(
+           │    │               └ <classmethod(<function SSLSocket._create at 0x000001A7D1B7C180>)>
+           │    └ <class 'ssl.SSLSocket'>
+           └ <ssl.SSLContext object at 0x000001A7FD4DE3C0>
+  File "c:\Users\hp\AppData\Local\Programs\Python\Python313\Lib\ssl.py", line 1076, in _create
+    self.do_handshake()
+    │    └ <function SSLSocket.do_handshake at 0x000001A7D1B7D760>
+    └ <ssl.SSLSocket [closed] fd=-1, family=2, type=1, proto=0>
+  File "c:\Users\hp\AppData\Local\Programs\Python\Python313\Lib\ssl.py", line 1372, in do_handshake
+    self._sslobj.do_handshake()
+    │    └ None
+    └ <ssl.SSLSocket [closed] fd=-1, family=2, type=1, proto=0>
+
+ssl.SSLError: [SSL: WRONG_VERSION_NUMBER] wrong version number (_ssl.c:1028)
+
+
+During handling of the above exception, another exception occurred:
+
+
+Traceback (most recent call last):
+
+  File "c:\Users\hp\AppData\Local\Programs\Python\Python313\Lib\site-packages\urllib3\connectionpool.py", line 787, in urlopen
+    response = self._make_request(
+               │    └ <function HTTPConnectionPool._make_request at 0x000001A7FD37C0E0>
+               └ <urllib3.connectionpool.HTTPSConnectionPool object at 0x000001A7BB451160>
+  File "c:\Users\hp\AppData\Local\Programs\Python\Python313\Lib\site-packages\urllib3\connectionpool.py", line 488, in _make_request
+    raise new_e
+          └ SSLError(SSLError(1, '[SSL: WRONG_VERSION_NUMBER] wrong version number (_ssl.c:1028)'))
+
+urllib3.exceptions.SSLError: [SSL: WRONG_VERSION_NUMBER] wrong version number (_ssl.c:1028)
+
+
+The above exception was the direct cause of the following exception:
+
+
+Traceback (most recent call last):
+
+  File "c:\Users\hp\AppData\Local\Programs\Python\Python313\Lib\site-packages\requests\adapters.py", line 667, in send
+    resp = conn.urlopen(
+           │    └ <function HTTPConnectionPool.urlopen at 0x000001A7FD37C2C0>
+           └ <urllib3.connectionpool.HTTPSConnectionPool object at 0x000001A7BB451160>
+  File "c:\Users\hp\AppData\Local\Programs\Python\Python313\Lib\site-packages\urllib3\connectionpool.py", line 841, in urlopen
+    retries = retries.increment(
+              │       └ <function Retry.increment at 0x000001A7FD32ADE0>
+              └ Retry(total=0, connect=None, read=False, redirect=None, status=None)
+  File "c:\Users\hp\AppData\Local\Programs\Python\Python313\Lib\site-packages\urllib3\util\retry.py", line 519, in increment
+    raise MaxRetryError(_pool, url, reason) from reason  # type: ignore[arg-type]
+          │             │      │    │            └ SSLError(SSLError(1, '[SSL: WRONG_VERSION_NUMBER] wrong version number (_ssl.c:1028)'))
+          │             │      │    └ SSLError(SSLError(1, '[SSL: WRONG_VERSION_NUMBER] wrong version number (_ssl.c:1028)'))
+          │             │      └ '/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json'
+          │             └ <urllib3.connectionpool.HTTPSConnectionPool object at 0x000001A7BB451160>
+          └ <class 'urllib3.exceptions.MaxRetryError'>
+
+urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json (Caused by SSLError(SSLError(1, '[SSL: WRONG_VERSION_NUMBER] wrong version number (_ssl.c:1028)')))
+
+
+During handling of the above exception, another exception occurred:
+
+
+Traceback (most recent call last):
+
+  File "c:\Users\hp\AppData\Local\Programs\Python\Python313\Lib\runpy.py", line 198, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+           │         │     └ {'__name__': '__main__', '__doc__': None, '__package__': '', '__loader__': <_frozen_importlib_external.SourceFileLoader objec...
+           │         └ <code object <module> at 0x000001A7D14157A0, file "c:\Users\hp\.vscode\extensions\ms-python.debugpy-2025.10.0-win32-x64\bundl...
+           └ <function _run_code at 0x000001A7D141D8A0>
+  File "c:\Users\hp\AppData\Local\Programs\Python\Python313\Lib\runpy.py", line 88, in _run_code
+    exec(code, run_globals)
+         │     └ {'__name__': '__main__', '__doc__': None, '__package__': '', '__loader__': <_frozen_importlib_external.SourceFileLoader objec...
+         └ <code object <module> at 0x000001A7D14157A0, file "c:\Users\hp\.vscode\extensions\ms-python.debugpy-2025.10.0-win32-x64\bundl...
+
+  File "c:\Users\hp\.vscode\extensions\ms-python.debugpy-2025.10.0-win32-x64\bundled\libs\debugpy\launcher/../..\debugpy\__main__.py", line 71, in <module>
+    cli.main()
+    │   └ <function main at 0x000001A7D3E25120>
+    └ <module 'debugpy.server.cli' from 'c:\\Users\\hp\\.vscode\\extensions\\ms-python.debugpy-2025.10.0-win32-x64\\bundled\\libs\\...
+
+  File "c:\Users\hp\.vscode\extensions\ms-python.debugpy-2025.10.0-win32-x64\bundled\libs\debugpy\launcher/../..\debugpy/..\debugpy\server\cli.py", line 501, in main
+    run()
+    └ <function run_file at 0x000001A7D3E24EA0>
+
+  File "c:\Users\hp\.vscode\extensions\ms-python.debugpy-2025.10.0-win32-x64\bundled\libs\debugpy\launcher/../..\debugpy/..\debugpy\server\cli.py", line 351, in run_file
+    runpy.run_path(target, run_name="__main__")
+    │     │        └ 'C:\\Users\\hp\\Desktop\\my-project-clean\\main.py'
+    │     └ <function run_path at 0x000001A7D3A1E020>
+    └ <module '_pydevd_bundle.pydevd_runpy' from 'c:\\Users\\hp\\.vscode\\extensions\\ms-python.debugpy-2025.10.0-win32-x64\\bundle...
+
+  File "c:\Users\hp\.vscode\extensions\ms-python.debugpy-2025.10.0-win32-x64\bundled\libs\debugpy\_vendored\pydevd\_pydevd_bundle\pydevd_runpy.py", line 310, in run_path
+    return _run_module_code(code, init_globals, run_name, pkg_name=pkg_name, script_name=fname)
+           │                │     │             │                  │                     └ 'C:\\Users\\hp\\Desktop\\my-project-clean\\main.py'
+           │                │     │             │                  └ ''
+           │                │     │             └ '__main__'
+           │                │     └ None
+           │                └ <code object <module> at 0x000001A7D46BBD20, file "C:\Users\hp\Desktop\my-project-clean\main.py", line 1>
+           └ <function _run_module_code at 0x000001A7D3A1DC60>
+
+  File "c:\Users\hp\.vscode\extensions\ms-python.debugpy-2025.10.0-win32-x64\bundled\libs\debugpy\_vendored\pydevd\_pydevd_bundle\pydevd_runpy.py", line 127, in _run_module_code
+    _run_code(code, mod_globals, init_globals, mod_name, mod_spec, pkg_name, script_name)
+    │         │     │            │             │         │         │         └ 'C:\\Users\\hp\\Desktop\\my-project-clean\\main.py'
+    │         │     │            │             │         │         └ ''
+    │         │     │            │             │         └ None
+    │         │     │            │             └ '__main__'
+    │         │     │            └ None
+    │         │     └ {'__name__': '__main__', '__doc__': None, '__package__': '', '__loader__': None, '__spec__': None, '__file__': 'C:\\Users\\hp...
+    │         └ <code object <module> at 0x000001A7D46BBD20, file "C:\Users\hp\Desktop\my-project-clean\main.py", line 1>
+    └ <function _run_code at 0x000001A7D3A1D800>
+
+  File "c:\Users\hp\.vscode\extensions\ms-python.debugpy-2025.10.0-win32-x64\bundled\libs\debugpy\_vendored\pydevd\_pydevd_bundle\pydevd_runpy.py", line 118, in _run_code
+    exec(code, run_globals)
+         │     └ {'__name__': '__main__', '__doc__': None, '__package__': '', '__loader__': None, '__spec__': None, '__file__': 'C:\\Users\\hp...
+         └ <code object <module> at 0x000001A7D46BBD20, file "C:\Users\hp\Desktop\my-project-clean\main.py", line 1>
+
+  File "C:\Users\hp\Desktop\my-project-clean\main.py", line 104, in <module>
+    main()
+    └ <function LoggerConfig.log_performance.<locals>.decorator.<locals>.wrapper at 0x000001A7BB437740>
+
+  File "C:\Users\hp\Desktop\my-project-clean\utils\logger.py", line 74, in wrapper
+    result = func(*args, **kwargs)
+             │     │       └ {}
+             │     └ ()
+             └ <function main at 0x000001A7BB4362A0>
+
+> File "C:\Users\hp\Desktop\my-project-clean\main.py", line 38, in main
+    embedding_model = EmbeddingModel(model_name=settings.model.embedding_model_name)
+                      │                         │        │     └ 'sentence-transformers/all-MiniLM-L6-v2'
+                      │                         │        └ ModelSettings(embedding_model_name='sentence-transformers/all-MiniLM-L6-v2', vector_size=384)
+                      │                         └ ProjectSettings(qdrant=QdrantSettings(host='localhost', port=6333, prefer_grpc=False), collection=CollectionSettings(bbc_news...
+                      └ <class 'models.embedding_model.EmbeddingModel'>
+
+  File "C:\Users\hp\Desktop\my-project-clean\models\embedding_model.py", line 84, in __init__
+    self.model = SentenceTransformer(
+    │            └ <class 'sentence_transformers.SentenceTransformer.SentenceTransformer'>
+    └ <models.embedding_model.EmbeddingModel object at 0x000001A7BB505160>
+
+  File "c:\Users\hp\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\SentenceTransformer.py", line 339, in __init__
+    modules = self._load_auto_model(
+              │    └ <function SentenceTransformer._load_auto_model at 0x000001A7B95D0CC0>
+              └ <unprintable SentenceTransformer object>
+  File "c:\Users\hp\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\SentenceTransformer.py", line 2061, in _load_auto_model
+    transformer_model = Transformer(
+                        └ <class 'sentence_transformers.models.Transformer.Transformer'>
+  File "c:\Users\hp\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\models\Transformer.py", line 87, in __init__
+    config, is_peft_model = self._load_config(model_name_or_path, cache_dir, backend, config_args)
+                            │    │            │                   │          │        └ {'token': None, 'trust_remote_code': False, 'revision': None, 'local_files_only': False}
+                            │    │            │                   │          └ 'torch'
+                            │    │            │                   └ None
+                            │    │            └ 'sentence-transformers/all-MiniLM-L6-v2'
+                            │    └ <function Transformer._load_config at 0x000001A7B9570360>
+                            └ <unprintable Transformer object>
+  File "c:\Users\hp\AppData\Local\Programs\Python\Python313\Lib\site-packages\sentence_transformers\models\Transformer.py", line 128, in _load_config
+    find_adapter_config_file(
+    └ <function find_adapter_config_file at 0x000001A7B3B2A2A0>
+  File "c:\Users\hp\AppData\Local\Programs\Python\Python313\Lib\site-packages\transformers\utils\peft_utils.py", line 88, in find_adapter_config_file
+    adapter_cached_filename = cached_file(
+                              └ <function cached_file at 0x000001A7B3B2A7A0>
+  File "c:\Users\hp\AppData\Local\Programs\Python\Python313\Lib\site-packages\transformers\utils\hub.py", line 318, in cached_file
+    file = cached_files(path_or_repo_id=path_or_repo_id, filenames=[filename], **kwargs)
+           │                            │                           │            └ {'cache_dir': None, 'force_download': False, 'resume_download': None, 'proxies': None, 'token': None, 'revision': None, 'loca...
+           │                            │                           └ 'adapter_config.json'
+           │                            └ 'sentence-transformers/all-MiniLM-L6-v2'
+           └ <function cached_files at 0x000001A7B3B2A840>
+  File "c:\Users\hp\AppData\Local\Programs\Python\Python313\Lib\site-packages\transformers\utils\hub.py", line 564, in cached_files
+    raise e
+  File "c:\Users\hp\AppData\Local\Programs\Python\Python313\Lib\site-packages\transformers\utils\hub.py", line 476, in cached_files
+    hf_hub_download(
+    └ <function hf_hub_download at 0x000001A7FD6C99E0>
+  File "c:\Users\hp\AppData\Local\Programs\Python\Python313\Lib\site-packages\huggingface_hub\utils\_validators.py", line 114, in _inner_fn
+    return fn(*args, **kwargs)
+           │   │       └ {'subfolder': None, 'repo_type': None, 'revision': None, 'cache_dir': 'C:\\Users\\hp\\.cache\\huggingface\\hub', 'user_agent'...
+           │   └ ('sentence-transformers/all-MiniLM-L6-v2', 'adapter_config.json')
+           └ <function hf_hub_download at 0x000001A7FD6C98A0>
+  File "c:\Users\hp\AppData\Local\Programs\Python\Python313\Lib\site-packages\huggingface_hub\file_download.py", line 1010, in hf_hub_download
+    return _hf_hub_download_to_cache_dir(
+           └ <function _hf_hub_download_to_cache_dir at 0x000001A7FD6C9940>
+  File "c:\Users\hp\AppData\Local\Programs\Python\Python313\Lib\site-packages\huggingface_hub\file_download.py", line 1073, in _hf_hub_download_to_cache_dir
+    (url_to_download, etag, commit_hash, expected_size, xet_file_data, head_call_error) = _get_metadata_or_catch_error(
+                                                                                          └ <function _get_metadata_or_catch_error at 0x000001A7FD6C9D00>
+  File "c:\Users\hp\AppData\Local\Programs\Python\Python313\Lib\site-packages\huggingface_hub\file_download.py", line 1546, in _get_metadata_or_catch_error
+    metadata = get_hf_file_metadata(
+               └ <function get_hf_file_metadata at 0x000001A7FD6C9DA0>
+  File "c:\Users\hp\AppData\Local\Programs\Python\Python313\Lib\site-packages\huggingface_hub\utils\_validators.py", line 114, in _inner_fn
+    return fn(*args, **kwargs)
+           │   │       └ {'url': 'https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json', 'proxies': None, 't...
+           │   └ ()
+           └ <function get_hf_file_metadata at 0x000001A7FD6C9BC0>
+  File "c:\Users\hp\AppData\Local\Programs\Python\Python313\Lib\site-packages\huggingface_hub\file_download.py", line 1463, in get_hf_file_metadata
+    r = _request_wrapper(
+        └ <function _request_wrapper at 0x000001A7FD6C8CC0>
+  File "c:\Users\hp\AppData\Local\Programs\Python\Python313\Lib\site-packages\huggingface_hub\file_download.py", line 286, in _request_wrapper
+    response = _request_wrapper(
+               └ <function _request_wrapper at 0x000001A7FD6C8CC0>
+  File "c:\Users\hp\AppData\Local\Programs\Python\Python313\Lib\site-packages\huggingface_hub\file_download.py", line 309, in _request_wrapper
+    response = http_backoff(method=method, url=url, **params, retry_on_exceptions=(), retry_on_status_codes=(429,))
+               │                   │           │      └ {'headers': {'user-agent': 'unknown/None; hf_hub/0.34.3; python/3.13.5; torch/2.7.1+cu128; transformers/4.54.1; session_id/8f...
+               │                   │           └ 'https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json'
+               │                   └ 'HEAD'
+               └ <function http_backoff at 0x000001A7FD6A4AE0>
+  File "c:\Users\hp\AppData\Local\Programs\Python\Python313\Lib\site-packages\huggingface_hub\utils\_http.py", line 310, in http_backoff
+    response = session.request(method=method, url=url, **kwargs)
+               │       │              │           │      └ {'headers': {'user-agent': 'unknown/None; hf_hub/0.34.3; python/3.13.5; torch/2.7.1+cu128; transformers/4.54.1; session_id/8f...
+               │       │              │           └ 'https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json'
+               │       │              └ 'HEAD'
+               │       └ <function Session.request at 0x000001A7FD51CCC0>
+               └ <requests.sessions.Session object at 0x000001A7BB4506E0>
+  File "c:\Users\hp\AppData\Local\Programs\Python\Python313\Lib\site-packages\requests\sessions.py", line 589, in request
+    resp = self.send(prep, **send_kwargs)
+           │    │    │       └ {'timeout': 10, 'allow_redirects': False, 'proxies': OrderedDict(), 'stream': False, 'verify': True, 'cert': None}
+           │    │    └ <PreparedRequest [HEAD]>
+           │    └ <function Session.send at 0x000001A7FD51D1C0>
+           └ <requests.sessions.Session object at 0x000001A7BB4506E0>
+  File "c:\Users\hp\AppData\Local\Programs\Python\Python313\Lib\site-packages\requests\sessions.py", line 703, in send
+    r = adapter.send(request, **kwargs)
+        │       │    │          └ {'timeout': 10, 'proxies': OrderedDict(), 'stream': False, 'verify': True, 'cert': None}
+        │       │    └ <PreparedRequest [HEAD]>
+        │       └ <function UniqueRequestIdAdapter.send at 0x000001A7FD6A4180>
+        └ <huggingface_hub.utils._http.UniqueRequestIdAdapter object at 0x000001A7BB3A7610>
+  File "c:\Users\hp\AppData\Local\Programs\Python\Python313\Lib\site-packages\huggingface_hub\utils\_http.py", line 96, in send
+    return super().send(request, *args, **kwargs)
+                        │         │       └ {'timeout': 10, 'proxies': OrderedDict(), 'stream': False, 'verify': True, 'cert': None}
+                        │         └ ()
+                        └ <PreparedRequest [HEAD]>
+  File "c:\Users\hp\AppData\Local\Programs\Python\Python313\Lib\site-packages\requests\adapters.py", line 698, in send
+    raise SSLError(e, request=request)
+          │                   └ <PreparedRequest [HEAD]>
+          └ <class 'requests.exceptions.SSLError'>
+
+requests.exceptions.SSLError: (MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json (Caused by SSLError(SSLError(1, '[SSL: WRONG_VERSION_NUMBER] wrong version number (_ssl.c:1028)')))"), '(Request ID: af779bb5-a919-4ca9-870c-63ede0a569c8)')
+2025-10-01 14:46:19 | ERROR    | utils.logger:wrapper:84 - Failed Main Qdrant Project Execution after 35.34 seconds: (MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json (Caused by SSLError(SSLError(1, '[SSL: WRONG_VERSION_NUMBER] wrong version number (_ssl.c:1028)')))"), '(Request ID: af779bb5-a919-4ca9-870c-63ede0a569c8)')
+2025-11-10 13:43:38 | INFO     | utils.logger:wrapper:71 - Starting Main Qdrant Project Execution
+2025-11-10 13:43:38 | INFO     | __main__:main:18 - Starting Qdrant Vector Database Project
+2025-11-10 13:43:38 | INFO     | __main__:main:22 - Loading and preprocessing dataset...
+2025-11-10 13:43:38 | INFO     | data.dataset_loader:__init__:28 - DatasetLoader initialized for SetFit/bbc-news with split train
+2025-11-10 13:43:38 | INFO     | data.dataset_loader:load_dataset:37 - Loading BBC News dataset: SetFit/bbc-news (split: train)
+2025-11-10 13:43:49 | INFO     | data.dataset_loader:load_dataset:44 - BBC News dataset size: 1225 records
+2025-11-10 13:43:49 | INFO     | data.dataset_loader:load_dataset:45 - Columns: ['text', 'label', 'label_text']
+2025-11-10 13:43:49 | INFO     | data.preprocessor:__init__:24 - TextPreprocessor initialized with 18 stopwords
+2025-11-10 13:43:49 | INFO     | data.preprocessor:preprocess_dataframe_column:67 - Preprocessing DataFrame column 'text' with 1225 rows
+2025-11-10 13:43:49 | INFO     | data.preprocessor:preprocess_dataframe_column:71 - Successfully preprocessed column 'text'
+2025-11-10 13:43:49 | INFO     | data.dataset_loader:save_to_parquet:63 - Dataset saved to parquet: ./bbc_news.parquet
+2025-11-10 13:43:49 | INFO     | __main__:main:32 - Dataset preprocessed and saved (1225 records)
+2025-11-10 13:43:49 | INFO     | __main__:main:38 - Initializing embedding model...
+2025-11-10 13:43:49 | INFO     | models.embedding_model:__init__:80 - Initializing embedding model: sentence-transformers/all-MiniLM-L6-v2
+2025-11-10 13:44:04 | INFO     | models.embedding_model:__init__:93 - Successfully loaded model: sentence-transformers/all-MiniLM-L6-v2
+2025-11-10 13:44:04 | INFO     | models.embedding_model:__init__:94 - Model vector size: 384
+2025-11-10 13:44:04 | INFO     | __main__:main:41 - Model loaded with vector size: 384
+2025-11-10 13:44:04 | INFO     | __main__:main:44 - Connecting to Qdrant...
+2025-11-10 13:44:04 | INFO     | database.qdrant_connection:__init__:31 - QdrantConnection initialized for localhost:6333 (gRPC: False)
+2025-11-10 13:44:04 | INFO     | database.qdrant_connection:connect:40 - Establishing connection to Qdrant at localhost:6333
+2025-11-10 13:44:05 | INFO     | database.qdrant_connection:connect:48 - Successfully connected to Qdrant
+2025-11-10 13:44:05 | INFO     | database.qdrant_connection:test_connection:61 - Testing Qdrant connection
+2025-11-10 13:44:05 | INFO     | database.qdrant_connection:test_connection:67 - Connection test successful
+2025-11-10 13:44:05 | INFO     | __main__:main:52 - Connected to Qdrant
+2025-11-10 13:44:05 | INFO     | database.collection_manager:__init__:92 - CollectionManager initialized
+2025-11-10 13:44:05 | INFO     | services.search_service:__init__:92 - SearchService initialized
+2025-11-10 13:44:05 | INFO     | __main__:main:57 - All components initialized
+2025-11-10 13:44:05 | INFO     | __main__:main:60 - Processing BBC News collection...
+2025-11-10 13:44:05 | INFO     | database.collection_manager:create_collection:108 - Creating collection: bbc_news_collection
+2025-11-10 13:44:05 | INFO     | database.collection_manager:create_collection:113 - Collection 'bbc_news_collection' exists, deleting it first
+2025-11-10 13:44:05 | INFO     | database.collection_manager:create_collection:115 - Deleted existing collection 'bbc_news_collection'
+2025-11-10 13:44:05 | INFO     | database.collection_manager:create_collection:128 - Successfully created collection 'bbc_news_collection' with named vector 'vector' and size 384
+2025-11-10 13:44:05 | INFO     | database.collection_manager:train:145 - Starting training with TrainOptions: ./bbc_news.parquet
+2025-11-10 13:44:05 | INFO     | database.collection_manager:train:151 - Initializing SentenceTransformer model...
+2025-11-10 13:44:08 | INFO     | database.collection_manager:train:153 - SentenceTransformer model initialized and cached
+2025-11-10 13:44:09 | INFO     | database.collection_manager:upsert_collection:276 - Uploaded collection 'bbc_news_collection' with 128 documents.
+2025-11-10 13:44:09 | INFO     | database.collection_manager:train:240 - Processed batch with 128 documents
+2025-11-10 13:44:09 | INFO     | database.collection_manager:upsert_collection:276 - Uploaded collection 'bbc_news_collection' with 128 documents.
+2025-11-10 13:44:09 | INFO     | database.collection_manager:train:240 - Processed batch with 128 documents
+2025-11-10 13:44:09 | INFO     | database.collection_manager:upsert_collection:276 - Uploaded collection 'bbc_news_collection' with 128 documents.
+2025-11-10 13:44:09 | INFO     | database.collection_manager:train:240 - Processed batch with 128 documents
+2025-11-10 13:44:10 | INFO     | database.collection_manager:upsert_collection:276 - Uploaded collection 'bbc_news_collection' with 128 documents.
+2025-11-10 13:44:10 | INFO     | database.collection_manager:train:240 - Processed batch with 128 documents
+2025-11-10 13:44:10 | INFO     | database.collection_manager:upsert_collection:276 - Uploaded collection 'bbc_news_collection' with 128 documents.
+2025-11-10 13:44:10 | INFO     | database.collection_manager:train:240 - Processed batch with 128 documents
+2025-11-10 13:44:10 | INFO     | database.collection_manager:upsert_collection:276 - Uploaded collection 'bbc_news_collection' with 128 documents.
+2025-11-10 13:44:10 | INFO     | database.collection_manager:train:240 - Processed batch with 128 documents
+2025-11-10 13:44:11 | INFO     | database.collection_manager:upsert_collection:276 - Uploaded collection 'bbc_news_collection' with 128 documents.
+2025-11-10 13:44:11 | INFO     | database.collection_manager:train:240 - Processed batch with 128 documents
+2025-11-10 13:44:11 | INFO     | database.collection_manager:upsert_collection:276 - Uploaded collection 'bbc_news_collection' with 128 documents.
+2025-11-10 13:44:11 | INFO     | database.collection_manager:train:240 - Processed batch with 128 documents
+2025-11-10 13:44:11 | INFO     | database.collection_manager:upsert_collection:276 - Uploaded collection 'bbc_news_collection' with 128 documents.
+2025-11-10 13:44:11 | INFO     | database.collection_manager:train:240 - Processed batch with 128 documents
+2025-11-10 13:44:11 | INFO     | database.collection_manager:upsert_collection:276 - Uploaded collection 'bbc_news_collection' with 73 documents.
+2025-11-10 13:44:11 | INFO     | database.collection_manager:train:240 - Processed batch with 73 documents
+2025-11-10 13:44:11 | INFO     | database.collection_manager:train:242 - Training completed successfully
+2025-11-10 13:44:11 | INFO     | __main__:main:72 - BBC News collection processed
+2025-11-10 13:44:11 | INFO     | __main__:main:75 - Performing search operations...
+2025-11-10 13:44:11 | INFO     | utils.logger:wrapper:71 - Starting Similarity Search
+2025-11-10 13:44:11 | INFO     | services.search_service:search_similar_texts:126 - Searching for similar texts in bbc_news_collection
+2025-11-10 13:44:11 | INFO     | utils.logger:wrapper:71 - Starting Text Encoding
+2025-11-10 13:44:11 | INFO     | models.embedding_model:encode_texts:131 - Encoding 1 texts to embeddings
+2025-11-10 13:44:11 | INFO     | models.embedding_model:encode_texts:143 - Successfully encoded 1 texts
+2025-11-10 13:44:11 | INFO     | utils.logger:wrapper:78 - Completed Text Encoding in 0.03 seconds
+2025-11-10 13:44:11 | INFO     | services.search_service:search_similar_texts:172 - Search completed: 5 results found
+2025-11-10 13:44:11 | INFO     | utils.logger:wrapper:78 - Completed Similarity Search in 0.06 seconds
+2025-11-10 13:44:11 | INFO     | __main__:main:97 - Performing recommendation operations...
+2025-11-10 13:44:11 | INFO     | utils.logger:wrapper:71 - Starting Recommendation Search
+2025-11-10 13:44:11 | INFO     | services.search_service:recommend_similar_texts:214 - Generating recommendations for bbc_news_collection
+2025-11-10 13:44:11 | ERROR    | services.search_service:recommend_similar_texts:261 - Recommendation failed: Unknown arguments: ['filter']
+2025-11-10 13:44:11 | ERROR    | utils.logger:wrapper:84 - Failed Recommendation Search after 0.00 seconds: Unknown arguments: ['filter']
+2025-11-10 13:44:11 | ERROR    | __main__:main:112 - Critical error in main execution: Unknown arguments: ['filter']
+Traceback (most recent call last):
+
+  File "c:\Users\hp\AppData\Local\Programs\Python\Python313\Lib\runpy.py", line 198, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+           │         │     └ {'__name__': '__main__', '__doc__': None, '__package__': '', '__loader__': <_frozen_importlib_external.SourceFileLoader objec...
+           │         └ <code object <module> at 0x0000013CAE9F57A0, file "c:\Users\hp\.cursor\extensions\ms-python.debugpy-2025.14.1-win32-x64\bundl...
+           └ <function _run_code at 0x0000013CAE9FD800>
+  File "c:\Users\hp\AppData\Local\Programs\Python\Python313\Lib\runpy.py", line 88, in _run_code
+    exec(code, run_globals)
+         │     └ {'__name__': '__main__', '__doc__': None, '__package__': '', '__loader__': <_frozen_importlib_external.SourceFileLoader objec...
+         └ <code object <module> at 0x0000013CAE9F57A0, file "c:\Users\hp\.cursor\extensions\ms-python.debugpy-2025.14.1-win32-x64\bundl...
+
+  File "c:\Users\hp\.cursor\extensions\ms-python.debugpy-2025.14.1-win32-x64\bundled\libs\debugpy\launcher/../..\debugpy\__main__.py", line 71, in <module>
+    cli.main()
+    │   └ <function main at 0x0000013CB147BE20>
+    └ <module 'debugpy.server.cli' from 'c:\\Users\\hp\\.cursor\\extensions\\ms-python.debugpy-2025.14.1-win32-x64\\bundled\\libs\\...
+
+  File "c:\Users\hp\.cursor\extensions\ms-python.debugpy-2025.14.1-win32-x64\bundled\libs\debugpy\launcher/../..\debugpy/..\debugpy\server\cli.py", line 508, in main
+    run()
+    └ <function run_file at 0x0000013CB147BBA0>
+
+  File "c:\Users\hp\.cursor\extensions\ms-python.debugpy-2025.14.1-win32-x64\bundled\libs\debugpy\launcher/../..\debugpy/..\debugpy\server\cli.py", line 358, in run_file
+    runpy.run_path(target, run_name="__main__")
+    │     │        └ 'C:\\Users\\hp\\Desktop\\my-project-clean\\main.py'
+    │     └ <function run_path at 0x0000013CB109C900>
+    └ <module '_pydevd_bundle.pydevd_runpy' from 'c:\\Users\\hp\\.cursor\\extensions\\ms-python.debugpy-2025.14.1-win32-x64\\bundle...
+
+  File "c:\Users\hp\.cursor\extensions\ms-python.debugpy-2025.14.1-win32-x64\bundled\libs\debugpy\_vendored\pydevd\_pydevd_bundle\pydevd_runpy.py", line 310, in run_path
+    return _run_module_code(code, init_globals, run_name, pkg_name=pkg_name, script_name=fname)
+           │                │     │             │                  │                     └ 'C:\\Users\\hp\\Desktop\\my-project-clean\\main.py'
+           │                │     │             │                  └ ''
+           │                │     │             └ '__main__'
+           │                │     └ None
+           │                └ <code object <module> at 0x0000013CB1D544E0, file "C:\Users\hp\Desktop\my-project-clean\main.py", line 1>
+           └ <function _run_module_code at 0x0000013CB109C540>
+
+  File "c:\Users\hp\.cursor\extensions\ms-python.debugpy-2025.14.1-win32-x64\bundled\libs\debugpy\_vendored\pydevd\_pydevd_bundle\pydevd_runpy.py", line 127, in _run_module_code
+    _run_code(code, mod_globals, init_globals, mod_name, mod_spec, pkg_name, script_name)
+    │         │     │            │             │         │         │         └ 'C:\\Users\\hp\\Desktop\\my-project-clean\\main.py'
+    │         │     │            │             │         │         └ ''
+    │         │     │            │             │         └ None
+    │         │     │            │             └ '__main__'
+    │         │     │            └ None
+    │         │     └ {'__name__': '__main__', '__doc__': None, '__package__': '', '__loader__': None, '__spec__': None, '__file__': 'C:\\Users\\hp...
+    │         └ <code object <module> at 0x0000013CB1D544E0, file "C:\Users\hp\Desktop\my-project-clean\main.py", line 1>
+    └ <function _run_code at 0x0000013CB109C0E0>
+
+  File "c:\Users\hp\.cursor\extensions\ms-python.debugpy-2025.14.1-win32-x64\bundled\libs\debugpy\_vendored\pydevd\_pydevd_bundle\pydevd_runpy.py", line 118, in _run_code
+    exec(code, run_globals)
+         │     └ {'__name__': '__main__', '__doc__': None, '__package__': '', '__loader__': None, '__spec__': None, '__file__': 'C:\\Users\\hp...
+         └ <code object <module> at 0x0000013CB1D544E0, file "C:\Users\hp\Desktop\my-project-clean\main.py", line 1>
+
+  File "C:\Users\hp\Desktop\my-project-clean\main.py", line 116, in <module>
+    main()
+    └ <function LoggerConfig.log_performance.<locals>.decorator.<locals>.wrapper at 0x0000013C98630860>
+
+  File "C:\Users\hp\Desktop\my-project-clean\utils\logger.py", line 74, in wrapper
+    result = func(*args, **kwargs)
+             │     │       └ {}
+             │     └ ()
+             └ <function main at 0x0000013C98613600>
+
+> File "C:\Users\hp\Desktop\my-project-clean\main.py", line 98, in main
+    results = search_service.recommend_similar_texts(
+              │              └ <function LoggerConfig.log_performance.<locals>.decorator.<locals>.wrapper at 0x0000013C98630720>
+              └ <services.search_service.SearchService object at 0x0000013CA42DDBE0>
+
+  File "C:\Users\hp\Desktop\my-project-clean\utils\logger.py", line 74, in wrapper
+    result = func(*args, **kwargs)
+             │     │       └ {'positive_ids': [1, 3, 9], 'negative_ids': [5], 'collection_name': 'bbc_news_collection', 'limit': 3, 'score_threshold': 0.2...
+             │     └ (<services.search_service.SearchService object at 0x0000013CA42DDBE0>,)
+             └ <function SearchService.recommend_similar_texts at 0x0000013C986304A0>
+
+  File "C:\Users\hp\Desktop\my-project-clean\services\search_service.py", line 245, in recommend_similar_texts
+    recommendations = self.client.recommend(**rec_params_dict)
+                      │    │      │           └ {'collection_name': 'bbc_news_collection', 'positive': [1, 3, 9], 'limit': 3, 'score_threshold': 0.25, 'with_payload': True, ...
+                      │    │      └ <function QdrantClient.recommend at 0x0000013C98610EA0>
+                      │    └ <qdrant_client.qdrant_client.QdrantClient object at 0x0000013CA3FB5940>
+                      └ <services.search_service.SearchService object at 0x0000013CA42DDBE0>
+
+  File "c:\Users\hp\AppData\Local\Programs\Python\Python313\Lib\site-packages\qdrant_client\qdrant_client.py", line 1021, in recommend
+    assert len(kwargs) == 0, f"Unknown arguments: {list(kwargs.keys())}"
+               │                                        │      └ <method 'keys' of 'dict' objects>
+               │                                        └ {'filter': Filter(should=None, min_should=None, must=[FieldCondition(key='label_text', match=MatchValue(value='business'), ra...
+               └ {'filter': Filter(should=None, min_should=None, must=[FieldCondition(key='label_text', match=MatchValue(value='business'), ra...
+
+AssertionError: Unknown arguments: ['filter']
+2025-11-10 13:44:11 | ERROR    | utils.logger:wrapper:84 - Failed Main Qdrant Project Execution after 33.29 seconds: Unknown arguments: ['filter']
+2025-11-10 13:45:22 | INFO     | utils.logger:wrapper:71 - Starting Main Qdrant Project Execution
+2025-11-10 13:45:22 | INFO     | __main__:main:18 - Starting Qdrant Vector Database Project
+2025-11-10 13:45:22 | INFO     | __main__:main:22 - Loading and preprocessing dataset...
+2025-11-10 13:45:22 | INFO     | data.dataset_loader:__init__:28 - DatasetLoader initialized for SetFit/bbc-news with split train
+2025-11-10 13:45:22 | INFO     | data.dataset_loader:load_dataset:37 - Loading BBC News dataset: SetFit/bbc-news (split: train)
+2025-11-10 13:45:26 | INFO     | data.dataset_loader:load_dataset:44 - BBC News dataset size: 1225 records
+2025-11-10 13:45:26 | INFO     | data.dataset_loader:load_dataset:45 - Columns: ['text', 'label', 'label_text']
+2025-11-10 13:45:26 | INFO     | data.preprocessor:__init__:24 - TextPreprocessor initialized with 18 stopwords
+2025-11-10 13:45:26 | INFO     | data.preprocessor:preprocess_dataframe_column:67 - Preprocessing DataFrame column 'text' with 1225 rows
+2025-11-10 13:45:26 | INFO     | data.preprocessor:preprocess_dataframe_column:71 - Successfully preprocessed column 'text'
+2025-11-10 13:45:26 | INFO     | data.dataset_loader:save_to_parquet:63 - Dataset saved to parquet: ./bbc_news.parquet
+2025-11-10 13:45:26 | INFO     | __main__:main:32 - Dataset preprocessed and saved (1225 records)
+2025-11-10 13:45:26 | INFO     | __main__:main:38 - Initializing embedding model...
+2025-11-10 13:45:26 | INFO     | models.embedding_model:__init__:80 - Initializing embedding model: sentence-transformers/all-MiniLM-L6-v2
+2025-11-10 13:45:38 | INFO     | models.embedding_model:__init__:93 - Successfully loaded model: sentence-transformers/all-MiniLM-L6-v2
+2025-11-10 13:45:38 | INFO     | models.embedding_model:__init__:94 - Model vector size: 384
+2025-11-10 13:45:38 | INFO     | __main__:main:41 - Model loaded with vector size: 384
+2025-11-10 13:45:38 | INFO     | __main__:main:44 - Connecting to Qdrant...
+2025-11-10 13:45:38 | INFO     | database.qdrant_connection:__init__:31 - QdrantConnection initialized for localhost:6333 (gRPC: False)
+2025-11-10 13:45:38 | INFO     | database.qdrant_connection:connect:40 - Establishing connection to Qdrant at localhost:6333
+2025-11-10 13:45:38 | INFO     | database.qdrant_connection:connect:48 - Successfully connected to Qdrant
+2025-11-10 13:45:38 | INFO     | database.qdrant_connection:test_connection:61 - Testing Qdrant connection
+2025-11-10 13:45:38 | INFO     | database.qdrant_connection:test_connection:67 - Connection test successful
+2025-11-10 13:45:38 | INFO     | __main__:main:52 - Connected to Qdrant
+2025-11-10 13:45:38 | INFO     | database.collection_manager:__init__:92 - CollectionManager initialized
+2025-11-10 13:45:38 | INFO     | services.search_service:__init__:92 - SearchService initialized
+2025-11-10 13:45:38 | INFO     | __main__:main:57 - All components initialized
+2025-11-10 13:45:38 | INFO     | __main__:main:60 - Processing BBC News collection...
+2025-11-10 13:45:38 | INFO     | database.collection_manager:create_collection:108 - Creating collection: bbc_news_collection
+2025-11-10 13:45:38 | INFO     | database.collection_manager:create_collection:113 - Collection 'bbc_news_collection' exists, deleting it first
+2025-11-10 13:45:38 | INFO     | database.collection_manager:create_collection:115 - Deleted existing collection 'bbc_news_collection'
+2025-11-10 13:45:38 | INFO     | database.collection_manager:create_collection:128 - Successfully created collection 'bbc_news_collection' with named vector 'vector' and size 384
+2025-11-10 13:45:38 | INFO     | database.collection_manager:train:145 - Starting training with TrainOptions: ./bbc_news.parquet
+2025-11-10 13:45:38 | INFO     | database.collection_manager:train:151 - Initializing SentenceTransformer model...
+2025-11-10 13:45:42 | INFO     | database.collection_manager:train:153 - SentenceTransformer model initialized and cached
+2025-11-10 13:45:42 | INFO     | database.collection_manager:upsert_collection:276 - Uploaded collection 'bbc_news_collection' with 128 documents.
+2025-11-10 13:45:42 | INFO     | database.collection_manager:train:240 - Processed batch with 128 documents
+2025-11-10 13:45:43 | INFO     | database.collection_manager:upsert_collection:276 - Uploaded collection 'bbc_news_collection' with 128 documents.
+2025-11-10 13:45:43 | INFO     | database.collection_manager:train:240 - Processed batch with 128 documents
+2025-11-10 13:45:43 | INFO     | database.collection_manager:upsert_collection:276 - Uploaded collection 'bbc_news_collection' with 128 documents.
+2025-11-10 13:45:43 | INFO     | database.collection_manager:train:240 - Processed batch with 128 documents
+2025-11-10 13:45:43 | INFO     | database.collection_manager:upsert_collection:276 - Uploaded collection 'bbc_news_collection' with 128 documents.
+2025-11-10 13:45:43 | INFO     | database.collection_manager:train:240 - Processed batch with 128 documents
+2025-11-10 13:45:43 | INFO     | database.collection_manager:upsert_collection:276 - Uploaded collection 'bbc_news_collection' with 128 documents.
+2025-11-10 13:45:43 | INFO     | database.collection_manager:train:240 - Processed batch with 128 documents
+2025-11-10 13:45:44 | INFO     | database.collection_manager:upsert_collection:276 - Uploaded collection 'bbc_news_collection' with 128 documents.
+2025-11-10 13:45:44 | INFO     | database.collection_manager:train:240 - Processed batch with 128 documents
+2025-11-10 13:45:44 | INFO     | database.collection_manager:upsert_collection:276 - Uploaded collection 'bbc_news_collection' with 128 documents.
+2025-11-10 13:45:44 | INFO     | database.collection_manager:train:240 - Processed batch with 128 documents
+2025-11-10 13:45:44 | INFO     | database.collection_manager:upsert_collection:276 - Uploaded collection 'bbc_news_collection' with 128 documents.
+2025-11-10 13:45:44 | INFO     | database.collection_manager:train:240 - Processed batch with 128 documents
+2025-11-10 13:45:45 | INFO     | database.collection_manager:upsert_collection:276 - Uploaded collection 'bbc_news_collection' with 128 documents.
+2025-11-10 13:45:45 | INFO     | database.collection_manager:train:240 - Processed batch with 128 documents
+2025-11-10 13:45:45 | INFO     | database.collection_manager:upsert_collection:276 - Uploaded collection 'bbc_news_collection' with 73 documents.
+2025-11-10 13:45:45 | INFO     | database.collection_manager:train:240 - Processed batch with 73 documents
+2025-11-10 13:45:45 | INFO     | database.collection_manager:train:242 - Training completed successfully
+2025-11-10 13:45:45 | INFO     | __main__:main:72 - BBC News collection processed
+2025-11-10 13:45:45 | INFO     | __main__:main:75 - Performing search operations...
+2025-11-10 13:45:45 | INFO     | utils.logger:wrapper:71 - Starting Similarity Search
+2025-11-10 13:45:45 | INFO     | services.search_service:search_similar_texts:126 - Searching for similar texts in bbc_news_collection
+2025-11-10 13:45:45 | INFO     | utils.logger:wrapper:71 - Starting Text Encoding
+2025-11-10 13:45:45 | INFO     | models.embedding_model:encode_texts:131 - Encoding 1 texts to embeddings
+2025-11-10 13:45:45 | INFO     | models.embedding_model:encode_texts:143 - Successfully encoded 1 texts
+2025-11-10 13:45:45 | INFO     | utils.logger:wrapper:78 - Completed Text Encoding in 0.01 seconds
+2025-11-10 13:45:45 | INFO     | services.search_service:search_similar_texts:172 - Search completed: 5 results found
+2025-11-10 13:45:45 | INFO     | utils.logger:wrapper:78 - Completed Similarity Search in 0.02 seconds
+2025-11-10 13:45:45 | INFO     | __main__:main:97 - Performing recommendation operations...
+2025-11-10 13:45:45 | INFO     | utils.logger:wrapper:71 - Starting Recommendation Search
+2025-11-10 13:45:45 | INFO     | services.search_service:recommend_similar_texts:214 - Generating recommendations for bbc_news_collection
+2025-11-10 13:45:45 | INFO     | services.search_service:recommend_similar_texts:257 - Recommendation completed: 3 results found
+2025-11-10 13:45:45 | INFO     | utils.logger:wrapper:78 - Completed Recommendation Search in 0.03 seconds
+2025-11-10 13:45:45 | INFO     | __main__:main:109 - All operations completed successfully!
+2025-11-10 13:45:45 | INFO     | utils.logger:wrapper:78 - Completed Main Qdrant Project Execution in 22.48 seconds
+2025-11-12 10:56:36 | INFO     | utils.logger:wrapper:71 - Starting Main Qdrant Project Execution
+2025-11-12 10:56:36 | INFO     | __main__:main:18 - Starting Qdrant Vector Database Project
+2025-11-12 10:56:36 | INFO     | __main__:main:22 - Loading and preprocessing dataset...
+2025-11-12 10:56:36 | INFO     | data.dataset_loader:__init__:28 - DatasetLoader initialized for SetFit/bbc-news with split train
+2025-11-12 10:56:36 | INFO     | data.dataset_loader:load_dataset:37 - Loading BBC News dataset: SetFit/bbc-news (split: train)
+2025-11-12 10:56:40 | INFO     | data.dataset_loader:load_dataset:44 - BBC News dataset size: 1225 records
+2025-11-12 10:56:40 | INFO     | data.dataset_loader:load_dataset:45 - Columns: ['text', 'label', 'label_text']
+2025-11-12 10:56:40 | INFO     | data.preprocessor:__init__:24 - TextPreprocessor initialized with 18 stopwords
+2025-11-12 10:56:40 | INFO     | data.preprocessor:preprocess_dataframe_column:67 - Preprocessing DataFrame column 'text' with 1225 rows
+2025-11-12 10:56:40 | INFO     | data.preprocessor:preprocess_dataframe_column:71 - Successfully preprocessed column 'text'
+2025-11-12 10:56:40 | INFO     | data.dataset_loader:save_to_parquet:63 - Dataset saved to parquet: ./bbc_news.parquet
+2025-11-12 10:56:40 | INFO     | __main__:main:32 - Dataset preprocessed and saved (1225 records)
+2025-11-12 10:56:40 | INFO     | __main__:main:38 - Initializing embedding model...
+2025-11-12 10:56:40 | INFO     | models.embedding_model:__init__:80 - Initializing embedding model: sentence-transformers/all-MiniLM-L6-v2
+2025-11-12 10:56:56 | INFO     | models.embedding_model:__init__:93 - Successfully loaded model: sentence-transformers/all-MiniLM-L6-v2
+2025-11-12 10:56:56 | INFO     | models.embedding_model:__init__:94 - Model vector size: 384
+2025-11-12 10:56:56 | INFO     | __main__:main:41 - Model loaded with vector size: 384
+2025-11-12 10:56:56 | INFO     | __main__:main:44 - Connecting to Qdrant...
+2025-11-12 10:56:56 | INFO     | database.qdrant_connection:__init__:31 - QdrantConnection initialized for localhost:6333 (gRPC: False)
+2025-11-12 10:56:56 | INFO     | database.qdrant_connection:connect:40 - Establishing connection to Qdrant at localhost:6333
+2025-11-12 10:57:01 | INFO     | database.qdrant_connection:connect:48 - Successfully connected to Qdrant
+2025-11-12 10:57:01 | INFO     | database.qdrant_connection:test_connection:61 - Testing Qdrant connection
+2025-11-12 10:57:05 | ERROR    | database.qdrant_connection:test_connection:70 - Connection test failed: [WinError 10061] Hedef makine etkin olarak reddettiğinden bağlantı kurulamadı
+2025-11-12 10:57:05 | ERROR    | __main__:main:49 - Failed to connect to Qdrant. Please ensure Qdrant is running.
+2025-11-12 10:57:05 | INFO     | utils.logger:wrapper:78 - Completed Main Qdrant Project Execution in 29.58 seconds
+2025-11-12 10:58:31 | INFO     | utils.logger:wrapper:71 - Starting Main Qdrant Project Execution
+2025-11-12 10:58:31 | INFO     | __main__:main:18 - Starting Qdrant Vector Database Project
+2025-11-12 10:58:31 | INFO     | __main__:main:22 - Loading and preprocessing dataset...
+2025-11-12 10:58:31 | INFO     | data.dataset_loader:__init__:28 - DatasetLoader initialized for SetFit/bbc-news with split train
+2025-11-12 10:58:31 | INFO     | data.dataset_loader:load_dataset:37 - Loading BBC News dataset: SetFit/bbc-news (split: train)
+2025-11-12 10:58:35 | INFO     | data.dataset_loader:load_dataset:44 - BBC News dataset size: 1225 records
+2025-11-12 10:58:35 | INFO     | data.dataset_loader:load_dataset:45 - Columns: ['text', 'label', 'label_text']
+2025-11-12 10:58:35 | INFO     | data.preprocessor:__init__:24 - TextPreprocessor initialized with 18 stopwords
+2025-11-12 10:58:35 | INFO     | data.preprocessor:preprocess_dataframe_column:67 - Preprocessing DataFrame column 'text' with 1225 rows
+2025-11-12 10:58:36 | INFO     | data.preprocessor:preprocess_dataframe_column:71 - Successfully preprocessed column 'text'
+2025-11-12 10:58:36 | INFO     | data.dataset_loader:save_to_parquet:63 - Dataset saved to parquet: ./bbc_news.parquet
+2025-11-12 10:58:36 | INFO     | __main__:main:32 - Dataset preprocessed and saved (1225 records)
+2025-11-12 10:58:36 | INFO     | __main__:main:38 - Initializing embedding model...
+2025-11-12 10:58:36 | INFO     | models.embedding_model:__init__:80 - Initializing embedding model: sentence-transformers/all-MiniLM-L6-v2
+2025-11-12 10:58:51 | INFO     | models.embedding_model:__init__:93 - Successfully loaded model: sentence-transformers/all-MiniLM-L6-v2
+2025-11-12 10:58:51 | INFO     | models.embedding_model:__init__:94 - Model vector size: 384
+2025-11-12 10:58:51 | INFO     | __main__:main:41 - Model loaded with vector size: 384
+2025-11-12 10:58:51 | INFO     | __main__:main:44 - Connecting to Qdrant...
+2025-11-12 10:58:51 | INFO     | database.qdrant_connection:__init__:31 - QdrantConnection initialized for localhost:6333 (gRPC: False)
+2025-11-12 10:58:51 | INFO     | database.qdrant_connection:connect:40 - Establishing connection to Qdrant at localhost:6333
+2025-11-12 10:58:51 | INFO     | database.qdrant_connection:connect:48 - Successfully connected to Qdrant
+2025-11-12 10:58:51 | INFO     | database.qdrant_connection:test_connection:61 - Testing Qdrant connection
+2025-11-12 10:58:51 | INFO     | database.qdrant_connection:test_connection:67 - Connection test successful
+2025-11-12 10:58:51 | INFO     | __main__:main:52 - Connected to Qdrant
+2025-11-12 10:58:51 | INFO     | database.collection_manager:__init__:92 - CollectionManager initialized
+2025-11-12 10:58:51 | INFO     | services.search_service:__init__:92 - SearchService initialized
+2025-11-12 10:58:51 | INFO     | __main__:main:57 - All components initialized
+2025-11-12 10:58:51 | INFO     | __main__:main:60 - Processing BBC News collection...
+2025-11-12 10:58:51 | INFO     | database.collection_manager:create_collection:108 - Creating collection: bbc_news_collection
+2025-11-12 10:58:51 | INFO     | database.collection_manager:create_collection:113 - Collection 'bbc_news_collection' exists, deleting it first
+2025-11-12 10:58:51 | INFO     | database.collection_manager:create_collection:115 - Deleted existing collection 'bbc_news_collection'
+2025-11-12 10:58:52 | INFO     | database.collection_manager:create_collection:128 - Successfully created collection 'bbc_news_collection' with named vector 'vector' and size 384
+2025-11-12 10:58:52 | INFO     | database.collection_manager:train:145 - Starting training with TrainOptions: ./bbc_news.parquet
+2025-11-12 10:58:52 | INFO     | database.collection_manager:train:151 - Initializing SentenceTransformer model...
+2025-11-12 10:58:55 | INFO     | database.collection_manager:train:153 - SentenceTransformer model initialized and cached
+2025-11-12 10:58:57 | INFO     | database.collection_manager:upsert_collection:276 - Uploaded collection 'bbc_news_collection' with 128 documents.
+2025-11-12 10:58:57 | INFO     | database.collection_manager:train:240 - Processed batch with 128 documents
+2025-11-12 10:58:58 | INFO     | database.collection_manager:upsert_collection:276 - Uploaded collection 'bbc_news_collection' with 128 documents.
+2025-11-12 10:58:58 | INFO     | database.collection_manager:train:240 - Processed batch with 128 documents
+2025-11-12 10:59:00 | INFO     | database.collection_manager:upsert_collection:276 - Uploaded collection 'bbc_news_collection' with 128 documents.
+2025-11-12 10:59:00 | INFO     | database.collection_manager:train:240 - Processed batch with 128 documents
+2025-11-12 10:59:01 | INFO     | database.collection_manager:upsert_collection:276 - Uploaded collection 'bbc_news_collection' with 128 documents.
+2025-11-12 10:59:01 | INFO     | database.collection_manager:train:240 - Processed batch with 128 documents
+2025-11-12 10:59:02 | INFO     | database.collection_manager:upsert_collection:276 - Uploaded collection 'bbc_news_collection' with 128 documents.
+2025-11-12 10:59:02 | INFO     | database.collection_manager:train:240 - Processed batch with 128 documents
+2025-11-12 10:59:03 | INFO     | database.collection_manager:upsert_collection:276 - Uploaded collection 'bbc_news_collection' with 128 documents.
+2025-11-12 10:59:03 | INFO     | database.collection_manager:train:240 - Processed batch with 128 documents
+2025-11-12 10:59:04 | INFO     | database.collection_manager:upsert_collection:276 - Uploaded collection 'bbc_news_collection' with 128 documents.
+2025-11-12 10:59:04 | INFO     | database.collection_manager:train:240 - Processed batch with 128 documents
+2025-11-12 10:59:05 | INFO     | database.collection_manager:upsert_collection:276 - Uploaded collection 'bbc_news_collection' with 128 documents.
+2025-11-12 10:59:05 | INFO     | database.collection_manager:train:240 - Processed batch with 128 documents
+2025-11-12 10:59:07 | INFO     | database.collection_manager:upsert_collection:276 - Uploaded collection 'bbc_news_collection' with 128 documents.
+2025-11-12 10:59:07 | INFO     | database.collection_manager:train:240 - Processed batch with 128 documents
+2025-11-12 10:59:07 | INFO     | database.collection_manager:upsert_collection:276 - Uploaded collection 'bbc_news_collection' with 73 documents.
+2025-11-12 10:59:07 | INFO     | database.collection_manager:train:240 - Processed batch with 73 documents
+2025-11-12 10:59:07 | INFO     | database.collection_manager:train:242 - Training completed successfully
+2025-11-12 10:59:07 | INFO     | __main__:main:72 - BBC News collection processed
+2025-11-12 10:59:07 | INFO     | __main__:main:75 - Performing search operations...
+2025-11-12 10:59:07 | INFO     | utils.logger:wrapper:71 - Starting Similarity Search
+2025-11-12 10:59:07 | INFO     | services.search_service:search_similar_texts:127 - Searching for similar texts in bbc_news_collection
+2025-11-12 10:59:07 | INFO     | utils.logger:wrapper:71 - Starting Text Encoding
+2025-11-12 10:59:07 | INFO     | models.embedding_model:encode_texts:131 - Encoding 1 texts to embeddings
+2025-11-12 10:59:07 | INFO     | models.embedding_model:encode_texts:143 - Successfully encoded 1 texts
+2025-11-12 10:59:07 | INFO     | utils.logger:wrapper:78 - Completed Text Encoding in 0.05 seconds
+2025-11-12 10:59:07 | INFO     | services.search_service:search_similar_texts:173 - Search completed: 5 results found
+2025-11-12 10:59:07 | INFO     | utils.logger:wrapper:78 - Completed Similarity Search in 0.09 seconds
+2025-11-12 10:59:07 | INFO     | __main__:main:97 - Performing recommendation operations...
+2025-11-12 10:59:07 | INFO     | utils.logger:wrapper:71 - Starting Recommendation Search
+2025-11-12 10:59:07 | INFO     | services.search_service:recommend_similar_texts:215 - Generating recommendations for bbc_news_collection
+2025-11-12 10:59:07 | INFO     | services.search_service:recommend_similar_texts:258 - Recommendation completed: 3 results found
+2025-11-12 10:59:07 | INFO     | utils.logger:wrapper:78 - Completed Recommendation Search in 0.02 seconds
+2025-11-12 10:59:07 | INFO     | __main__:main:109 - All operations completed successfully!
+2025-11-12 10:59:07 | INFO     | utils.logger:wrapper:78 - Completed Main Qdrant Project Execution in 36.17 seconds
+2025-11-12 11:24:54 | INFO     | utils.logger:wrapper:71 - Starting Main Qdrant Project Execution
+2025-11-12 11:24:54 | INFO     | __main__:main:18 - Starting Qdrant Vector Database Project
+2025-11-12 11:24:54 | INFO     | __main__:main:22 - Loading and preprocessing dataset...
+2025-11-12 11:24:54 | INFO     | data.dataset_loader:__init__:28 - DatasetLoader initialized for SetFit/bbc-news with split train
+2025-11-12 11:24:54 | INFO     | data.dataset_loader:load_dataset:37 - Loading BBC News dataset: SetFit/bbc-news (split: train)
+2025-11-12 11:24:59 | INFO     | data.dataset_loader:load_dataset:44 - BBC News dataset size: 1225 records
+2025-11-12 11:24:59 | INFO     | data.dataset_loader:load_dataset:45 - Columns: ['text', 'label', 'label_text']
+2025-11-12 11:24:59 | INFO     | data.preprocessor:__init__:24 - TextPreprocessor initialized with 18 stopwords
+2025-11-12 11:24:59 | INFO     | data.preprocessor:preprocess_dataframe_column:67 - Preprocessing DataFrame column 'text' with 1225 rows
+2025-11-12 11:25:00 | INFO     | data.preprocessor:preprocess_dataframe_column:71 - Successfully preprocessed column 'text'
+2025-11-12 11:25:00 | INFO     | data.dataset_loader:save_to_parquet:63 - Dataset saved to parquet: ./bbc_news.parquet
+2025-11-12 11:25:00 | INFO     | __main__:main:32 - Dataset preprocessed and saved (1225 records)
+2025-11-12 11:25:00 | INFO     | __main__:main:38 - Initializing embedding model...
+2025-11-12 11:25:00 | INFO     | models.embedding_model:__init__:80 - Initializing embedding model: sentence-transformers/all-MiniLM-L6-v2
+2025-11-12 11:25:16 | INFO     | models.embedding_model:__init__:93 - Successfully loaded model: sentence-transformers/all-MiniLM-L6-v2
+2025-11-12 11:25:16 | INFO     | models.embedding_model:__init__:94 - Model vector size: 384
+2025-11-12 11:25:16 | INFO     | __main__:main:41 - Model loaded with vector size: 384
+2025-11-12 11:25:16 | INFO     | __main__:main:44 - Connecting to Qdrant...
+2025-11-12 11:25:16 | INFO     | database.qdrant_connection:__init__:31 - QdrantConnection initialized for localhost:6333 (gRPC: False)
+2025-11-12 11:25:16 | INFO     | database.qdrant_connection:connect:40 - Establishing connection to Qdrant at localhost:6333
+2025-11-12 11:25:17 | INFO     | database.qdrant_connection:connect:48 - Successfully connected to Qdrant
+2025-11-12 11:25:17 | INFO     | database.qdrant_connection:test_connection:61 - Testing Qdrant connection
+2025-11-12 11:25:17 | INFO     | database.qdrant_connection:test_connection:67 - Connection test successful
+2025-11-12 11:25:17 | INFO     | __main__:main:52 - Connected to Qdrant
+2025-11-12 11:25:17 | INFO     | database.collection_manager:__init__:92 - CollectionManager initialized
+2025-11-12 11:25:17 | INFO     | services.search_service:__init__:92 - SearchService initialized
+2025-11-12 11:25:17 | INFO     | __main__:main:57 - All components initialized
+2025-11-12 11:25:17 | INFO     | __main__:main:60 - Processing BBC News collection...
+2025-11-12 11:25:17 | INFO     | database.collection_manager:create_collection:108 - Creating collection: bbc_news_collection
+2025-11-12 11:25:17 | INFO     | database.collection_manager:create_collection:113 - Collection 'bbc_news_collection' exists, deleting it first
+2025-11-12 11:25:17 | INFO     | database.collection_manager:create_collection:115 - Deleted existing collection 'bbc_news_collection'
+2025-11-12 11:25:17 | INFO     | database.collection_manager:create_collection:128 - Successfully created collection 'bbc_news_collection' with named vector 'vector' and size 384
+2025-11-12 11:25:17 | INFO     | database.collection_manager:train:145 - Starting training with TrainOptions: ./bbc_news.parquet
+2025-11-12 11:25:17 | INFO     | database.collection_manager:train:151 - Initializing SentenceTransformer model...
+2025-11-12 11:25:21 | INFO     | database.collection_manager:train:153 - SentenceTransformer model initialized and cached
+2025-11-12 11:25:23 | INFO     | database.collection_manager:upsert_collection:276 - Uploaded collection 'bbc_news_collection' with 128 documents.
+2025-11-12 11:25:23 | INFO     | database.collection_manager:train:240 - Processed batch with 128 documents
+2025-11-12 11:25:24 | INFO     | database.collection_manager:upsert_collection:276 - Uploaded collection 'bbc_news_collection' with 128 documents.
+2025-11-12 11:25:24 | INFO     | database.collection_manager:train:240 - Processed batch with 128 documents
+2025-11-12 11:25:25 | INFO     | database.collection_manager:upsert_collection:276 - Uploaded collection 'bbc_news_collection' with 128 documents.
+2025-11-12 11:25:25 | INFO     | database.collection_manager:train:240 - Processed batch with 128 documents
+2025-11-12 11:25:26 | INFO     | database.collection_manager:upsert_collection:276 - Uploaded collection 'bbc_news_collection' with 128 documents.
+2025-11-12 11:25:26 | INFO     | database.collection_manager:train:240 - Processed batch with 128 documents
+2025-11-12 11:25:27 | INFO     | database.collection_manager:upsert_collection:276 - Uploaded collection 'bbc_news_collection' with 128 documents.
+2025-11-12 11:25:27 | INFO     | database.collection_manager:train:240 - Processed batch with 128 documents
+2025-11-12 11:25:28 | INFO     | database.collection_manager:upsert_collection:276 - Uploaded collection 'bbc_news_collection' with 128 documents.
+2025-11-12 11:25:28 | INFO     | database.collection_manager:train:240 - Processed batch with 128 documents
+2025-11-12 11:25:30 | INFO     | database.collection_manager:upsert_collection:276 - Uploaded collection 'bbc_news_collection' with 128 documents.
+2025-11-12 11:25:30 | INFO     | database.collection_manager:train:240 - Processed batch with 128 documents
+2025-11-12 11:25:31 | INFO     | database.collection_manager:upsert_collection:276 - Uploaded collection 'bbc_news_collection' with 128 documents.
+2025-11-12 11:25:31 | INFO     | database.collection_manager:train:240 - Processed batch with 128 documents
+2025-11-12 11:25:32 | INFO     | database.collection_manager:upsert_collection:276 - Uploaded collection 'bbc_news_collection' with 128 documents.
+2025-11-12 11:25:32 | INFO     | database.collection_manager:train:240 - Processed batch with 128 documents
+2025-11-12 11:25:33 | INFO     | database.collection_manager:upsert_collection:276 - Uploaded collection 'bbc_news_collection' with 73 documents.
+2025-11-12 11:25:33 | INFO     | database.collection_manager:train:240 - Processed batch with 73 documents
+2025-11-12 11:25:33 | INFO     | database.collection_manager:train:242 - Training completed successfully
+2025-11-12 11:25:33 | INFO     | __main__:main:72 - BBC News collection processed
+2025-11-12 11:25:33 | INFO     | __main__:main:75 - Performing search operations...
+2025-11-12 11:25:33 | INFO     | utils.logger:wrapper:71 - Starting Similarity Search
+2025-11-12 11:25:33 | INFO     | services.search_service:search_similar_texts:127 - Searching for similar texts in bbc_news_collection
+2025-11-12 11:25:33 | INFO     | utils.logger:wrapper:71 - Starting Text Encoding
+2025-11-12 11:25:33 | INFO     | models.embedding_model:encode_texts:131 - Encoding 1 texts to embeddings
+2025-11-12 11:25:33 | INFO     | models.embedding_model:encode_texts:143 - Successfully encoded 1 texts
+2025-11-12 11:25:33 | INFO     | utils.logger:wrapper:78 - Completed Text Encoding in 0.03 seconds
+2025-11-12 11:25:33 | INFO     | services.search_service:search_similar_texts:173 - Search completed: 5 results found
+2025-11-12 11:25:33 | INFO     | utils.logger:wrapper:78 - Completed Similarity Search in 0.06 seconds
+2025-11-12 11:25:33 | INFO     | __main__:main:97 - Performing recommendation operations...
+2025-11-12 11:25:33 | INFO     | utils.logger:wrapper:71 - Starting Recommendation Search
+2025-11-12 11:25:33 | INFO     | services.search_service:recommend_similar_texts:215 - Generating recommendations for bbc_news_collection
+2025-11-12 11:25:33 | INFO     | services.search_service:recommend_similar_texts:258 - Recommendation completed: 3 results found
+2025-11-12 11:25:33 | INFO     | utils.logger:wrapper:78 - Completed Recommendation Search in 0.03 seconds
+2025-11-12 11:25:33 | INFO     | __main__:main:109 - All operations completed successfully!
+2025-11-12 11:25:33 | INFO     | utils.logger:wrapper:78 - Completed Main Qdrant Project Execution in 39.07 seconds
+2026-03-01 14:24:59 | INFO     | utils.logger:wrapper:71 - Starting Main Qdrant Project Execution
+2026-03-01 14:24:59 | INFO     | __main__:main:18 - Starting Qdrant Vector Database Project
+2026-03-01 14:24:59 | INFO     | __main__:main:22 - Loading and preprocessing dataset...
+2026-03-01 14:24:59 | INFO     | data.dataset_loader:__init__:28 - DatasetLoader initialized for SetFit/bbc-news with split train
+2026-03-01 14:24:59 | INFO     | data.dataset_loader:load_dataset:37 - Loading BBC News dataset: SetFit/bbc-news (split: train)
+2026-03-01 14:25:06 | INFO     | data.dataset_loader:load_dataset:44 - BBC News dataset size: 1225 records
+2026-03-01 14:25:06 | INFO     | data.dataset_loader:load_dataset:45 - Columns: ['text', 'label', 'label_text']
+2026-03-01 14:25:06 | INFO     | data.preprocessor:__init__:24 - TextPreprocessor initialized with 18 stopwords
+2026-03-01 14:25:06 | INFO     | data.preprocessor:preprocess_dataframe_column:67 - Preprocessing DataFrame column 'text' with 1225 rows
+2026-03-01 14:25:06 | INFO     | data.preprocessor:preprocess_dataframe_column:71 - Successfully preprocessed column 'text'
+2026-03-01 14:25:06 | INFO     | data.dataset_loader:save_to_parquet:63 - Dataset saved to parquet: ./bbc_news.parquet
+2026-03-01 14:25:06 | INFO     | __main__:main:32 - Dataset preprocessed and saved (1225 records)
+2026-03-01 14:25:06 | INFO     | __main__:main:38 - Initializing embedding model...
+2026-03-01 14:25:06 | INFO     | models.embedding_model:__init__:80 - Initializing embedding model: sentence-transformers/all-MiniLM-L6-v2
+2026-03-01 14:25:17 | INFO     | models.embedding_model:__init__:93 - Successfully loaded model: sentence-transformers/all-MiniLM-L6-v2
+2026-03-01 14:25:17 | INFO     | models.embedding_model:__init__:94 - Model vector size: 384
+2026-03-01 14:25:17 | INFO     | __main__:main:41 - Model loaded with vector size: 384
+2026-03-01 14:25:17 | INFO     | __main__:main:44 - Connecting to Qdrant...
+2026-03-01 14:25:17 | INFO     | database.qdrant_connection:__init__:31 - QdrantConnection initialized for localhost:6333 (gRPC: False)
+2026-03-01 14:25:17 | INFO     | database.qdrant_connection:connect:40 - Establishing connection to Qdrant at localhost:6333
+2026-03-01 14:25:21 | INFO     | database.qdrant_connection:connect:48 - Successfully connected to Qdrant
+2026-03-01 14:25:21 | INFO     | database.qdrant_connection:test_connection:61 - Testing Qdrant connection
+2026-03-01 14:25:25 | ERROR    | database.qdrant_connection:test_connection:70 - Connection test failed: [WinError 10061] Hedef makine etkin olarak reddettiğinden bağlantı kurulamadı
+2026-03-01 14:25:25 | ERROR    | __main__:main:49 - Failed to connect to Qdrant. Please ensure Qdrant is running.
+2026-03-01 14:25:25 | INFO     | utils.logger:wrapper:78 - Completed Main Qdrant Project Execution in 26.00 seconds
