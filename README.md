@@ -91,7 +91,3 @@ Ana ayarlar `config/settings.py` dosyasında duruyor. Örneğin:
 Bu repo, hem Qdrant’ı hem de metin embedding kavramını öğrenmek için basit bir başlangıç projesi olarak düşünülebilir.
 
 ---
-
-## 📝 Lisans
-
-Bu proje **MIT Lisansı** ile yayınlanmıştır.
